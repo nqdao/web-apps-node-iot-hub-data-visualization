@@ -75,7 +75,7 @@ $(document).ready(function () {
     try {
       var obj = JSON.parse(message.data);
       if(!obj.time || !obj.temperature) {
-        console.log('did not read temperature' + obj.temperature)
+        console.log('did not read temperature' + obj.Temperature)
         return;
       }
       timeData.push(obj.time);

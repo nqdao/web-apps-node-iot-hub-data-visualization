@@ -4,6 +4,7 @@ const WebSocket = require('ws');
 const moment = require('moment');
 const path = require('path');
 const iotHubClient = require('./IoTHub/iot-hub.js');
+const eventHubClient = require('./EventHub/eventhub.js');
 
 const app = express();
 
@@ -40,6 +41,19 @@ iotHubReader.startReadMessage(function (obj, date) {
     console.error(err);
   }
 });
+
+//Event Hub Reader
+// var eventHubReader = new eventHubClient(process.env['Azure.EventHub.ConnectionString'], process.env['Azure.EventHub.ConsumerGroup']);
+// eventHubReader.startReadMessage(function (obj, date) {
+//   try {
+//     console.log(date);
+//     date = date || Date.now()
+//     wss.broadcast(JSON.stringify(Object.assign(obj, { time: moment.utc(date).format('YYYY:MM:DD[T]hh:mm:ss') })));
+//   } catch (err) {
+//     console.log(obj);
+//     console.error(err);
+//   }
+// });
 
 var port = normalizePort(process.env.PORT || '3000');
 server.listen(port, function listening() {

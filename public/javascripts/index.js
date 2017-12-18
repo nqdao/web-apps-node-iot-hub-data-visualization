@@ -67,7 +67,10 @@ $(document).ready(function () {
   });
 
   //textbox
-  var txtbox = document.createElement("myText").value = "Azure.IoT.IoTHub.DeviceId";
+  var txtbox = document.createElement("input");
+  txtbox.type = "text";
+  txtbox.setAttribute('readonly',true);
+  txtbox.value = "Azure.IoT.IoTHub.DeviceId";
   var body = document.getElementsByTagName('body')[0];
   body.appendChild(txtbox);
 

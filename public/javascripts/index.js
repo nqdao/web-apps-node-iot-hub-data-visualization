@@ -70,7 +70,7 @@ $(document).ready(function () {
   var txtbox = document.createElement("input");
   txtbox.type = "text";
   txtbox.setAttribute('readonly',true);
-  txtbox.value = "Event Hub"
+  txtbox.value = "Event Hub";
   var body = document.getElementsByTagName('body')[0];
   body.appendChild(txtbox);
 

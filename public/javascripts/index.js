@@ -67,7 +67,7 @@ $(document).ready(function () {
   });
 
   //textbox
-  var txtbox = document.createElement("myText").value = process.env['Azure.IoT.IoTHub.DeviceId'];
+  var txtbox = document.createElement("myText").value = "Azure.IoT.IoTHub.DeviceId";
 
   var ws = new WebSocket('wss://' + location.host);
   ws.onopen = function () {

@@ -30,21 +30,8 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
-// var iotHubReader = new iotHubClient(process.env['Azure.IoT.IoTHub.ConnectionString'], process.env['Azure.IoT.IoTHub.ConsumerGroup']);
-// iotHubReader.startReadMessage(function (obj, date) {
-//   try {
-//     console.log(date);
-//     date = date || Date.now()
-//     wss.broadcast(JSON.stringify(Object.assign(obj, { time: moment.utc(date).format('YYYY:MM:DD[T]hh:mm:ss') })));
-//   } catch (err) {
-//     console.log(obj);
-//     console.error(err);
-//   }
-// });
-
-//Event Hub Reader
-var eventHubReader = new eventHubClient(process.env['Azure.IoT.EventHub.ConnectionString'], process.env['Azure.IoT.EventHub.ConsumerGroup']);
-eventHubReader.startReadMessage(function (obj, date) {
+var iotHubReader = new iotHubClient(process.env['Azure.IoT.IoTHub.ConnectionString'], process.env['Azure.IoT.IoTHub.ConsumerGroup']);
+iotHubReader.startReadMessage(function (obj, date) {
   try {
     console.log(date);
     date = date || Date.now()
@@ -54,6 +41,19 @@ eventHubReader.startReadMessage(function (obj, date) {
     console.error(err);
   }
 });
+
+//Event Hub Reader
+// var eventHubReader = new eventHubClient(process.env['Azure.IoT.EventHub.ConnectionString'], process.env['Azure.IoT.EventHub.ConsumerGroup']);
+// eventHubReader.startReadMessage(function (obj, date) {
+//   try {
+//     console.log(date);
+//     date = date || Date.now()
+//     wss.broadcast(JSON.stringify(Object.assign(obj, { time: moment.utc(date).format('YYYY:MM:DD[T]hh:mm:ss') })));
+//   } catch (err) {
+//     console.log(obj);
+//     console.error(err);
+//   }
+// });
 
 var port = normalizePort(process.env.PORT || '3000');
 server.listen(port, function listening() {

@@ -68,6 +68,8 @@ $(document).ready(function () {
 
   //textbox
   var txtbox = document.createElement("myText").value = "Azure.IoT.IoTHub.DeviceId";
+  var body = document.getElementById("body");
+  body.appendChild(txtbox);
 
   var ws = new WebSocket('wss://' + location.host);
   ws.onopen = function () {

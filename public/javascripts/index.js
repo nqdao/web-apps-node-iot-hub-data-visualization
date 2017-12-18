@@ -66,6 +66,9 @@ $(document).ready(function () {
     options: basicOption
   });
 
+  //textbox
+  var txtbox = document.createElement("myText").value = process.env['Azure.IoT.IoTHub.DeviceId'];
+
   var ws = new WebSocket('wss://' + location.host);
   ws.onopen = function () {
     console.log('Successfully connect WebSocket');

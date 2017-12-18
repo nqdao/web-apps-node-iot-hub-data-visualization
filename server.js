@@ -42,6 +42,7 @@ iotHubReader.startReadMessage(function (obj, date) {
   }
 });
 
+
 //Event Hub Reader
 // var eventHubReader = new eventHubClient(process.env['Azure.IoT.EventHub.ConnectionString'], process.env['Azure.IoT.EventHub.ConsumerGroup']);
 // eventHubReader.startReadMessage(function (obj, date) {

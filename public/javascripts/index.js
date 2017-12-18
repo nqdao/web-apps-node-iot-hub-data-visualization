@@ -66,13 +66,30 @@ $(document).ready(function () {
     options: basicOption
   });
 
-  //textbox
-  var txtbox = document.createElement("input");
-  txtbox.type = "text";
-  txtbox.setAttribute('readonly',true);
-  txtbox.value = "Event Hub";
+  //Create Device input
+  var form = document.createElement('form');
+  form.onsubmit = function() {
+    CreateDevice(idInput.value);
+  };
+  var idLabel = document.createElement('label');
+  idLabel.for = 'deviceId';
+  idLabel.innerHTML = 'Device ID';
+  form.appendChild(idLabel);
+  var idInput = document.createElement("input");
+  idInput.id = 'deviceId'
+  idInput.type = "text";
+  idInput.value = "MyDeviceID";
+  form.appendChild(idInput);
+  idSubmit = document.createElement("input");
+  idSubmit.type = 'submit';
+  idSubmit.value = 'Create device';
+  form.appendChild(idSubmit);
   var body = document.getElementsByTagName('body')[0];
-  body.appendChild(txtbox);
+  body.appendChild(form);
+
+  function CreateDevice(deviceId) {
+    console.log('New Device ID: ' + deviceId);
+  }
 
   var ws = new WebSocket('wss://' + location.host);
   ws.onopen = function () {

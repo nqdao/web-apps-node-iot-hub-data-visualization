@@ -4,6 +4,7 @@
 'use strict';
 
 var EventHubClient = require('azure-event-hubs').Client;
+var iothub = require('azure-iothub');
 
 // Close connection to IoT Hub.
 IoTHubReaderClient.prototype.stopReadMessage = function() {
@@ -43,6 +44,34 @@ IoTHubReaderClient.prototype.startReadMessage = function(cb) {
 function IoTHubReaderClient(connectionString, consumerGroupName) {
   this.iotHubClient = EventHubClient.fromConnectionString(connectionString);
   this.consumerGroupName = consumerGroupName;
+  this.iotHubRegistry = iothub.Registry.fromConnectionString(connectionString);
+}
+
+IoTHubReaderClient.prototype.createDevice = function(cb) {
+  var printError = function(err) {
+    console.error(err.message || err);
+  };
+
+  var device = {
+    deviceId: 'deviceName' 
+  }
+  device.deviceId = deviceName;
+  this.iotHubRegistry.create(device, function(err, deviceInfo, res) {
+    if (err) {
+      this.iotHubRegistry.get(device.deviceId, printDeviceInfo);
+    }
+    if (deviceInfo) {
+      printDeviceInfo(err, deviceInfo, res);
+    }
+  });
+
+}
+
+function printDeviceInfo(err, deviceInfo, res) {
+  if (deviceInfo) {
+    console.log('Device ID: ' + deviceInfo.deviceId);
+    console.log('Device key: ' + deviceInfo.authentication.symmetricKey.primaryKey);
+  }
 }
 
 module.exports = IoTHubReaderClient;

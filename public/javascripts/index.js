@@ -67,26 +67,29 @@ $(document).ready(function () {
   });
 
   //Create Device input
-  var form = document.createElement('form');
+  //var form = document.createElement('form');
   var idLabel = document.createElement('label');
   idLabel.for = 'deviceId';
-  idLabel.innerHTML = 'Device ID';
-  form.appendChild(idLabel);
+  idLabel.innerHTML = 'New Device ID';
+  //form.appendChild(idLabel);
   var idInput = document.createElement("input");
   idInput.id = 'deviceId'
   idInput.type = "text";
   idInput.value = "MyDeviceID";
-  form.appendChild(idInput);
-  idSubmit = document.createElement("button");
-  
+  //form.appendChild(idInput);
+  var idSubmit = document.createElement("button");
+
   idSubmit.onclick = function() {
     console.log('New Device ID: ' + idInput.value);
   };
 
   idSubmit.innerHTML = 'Create Device';
-  form.appendChild(idSubmit);
+  //form.appendChild(idSubmit);
   var body = document.getElementsByTagName('body')[0];
-  body.appendChild(form);
+  body.appendChild(idLabel);
+  body.appendChild(idInput);
+  body.appendChild(idSubmit);
+  
 
   var ws = new WebSocket('wss://' + location.host);
   ws.onopen = function () {

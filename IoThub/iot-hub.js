@@ -47,7 +47,7 @@ function IoTHubReaderClient(connectionString, consumerGroupName) {
   this.iotHubRegistry = iothub.Registry.fromConnectionString(connectionString);
 }
 
-IoTHubReaderClient.prototype.createDevice = function(cb) {
+IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
   var printError = function(err) {
     console.error(err.message || err);
   };
@@ -55,14 +55,26 @@ IoTHubReaderClient.prototype.createDevice = function(cb) {
   var device = {
     deviceId: 'deviceName' 
   }
-  device.deviceId = deviceName;
+  device.deviceId = deviceId;
+  var resp = {
+    type: 'error',
+    info: null,
+  };
+  cb(resp);
+  
   this.iotHubRegistry.create(device, function(err, deviceInfo, res) {
     if (err) {
       this.iotHubRegistry.get(device.deviceId, printDeviceInfo);
+      resp.type = 'error';
+      resp.info = err;
     }
+
     if (deviceInfo) {
       printDeviceInfo(err, deviceInfo, res);
+      resp.type = 'success';
+      resp.info = deviceInfo;
     }
+    cb(resp);
   });
 
 }
@@ -71,6 +83,7 @@ function printDeviceInfo(err, deviceInfo, res) {
   if (deviceInfo) {
     console.log('Device ID: ' + deviceInfo.deviceId);
     console.log('Device key: ' + deviceInfo.authentication.symmetricKey.primaryKey);
+    return deviceInfo;
   }
 }
 

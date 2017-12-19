@@ -98,6 +98,10 @@ $(document).ready(function () {
     console.log('Successfully connect WebSocket');
   }
   ws.onmessage = function (message) {
+    if (message.data == null) {
+      console.log('received non-data message: ' + message);
+      return;
+    }
     console.log('receive message' + message.data);
     try {
       var obj = JSON.parse(message.data);

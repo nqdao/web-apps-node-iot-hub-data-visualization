@@ -68,9 +68,6 @@ $(document).ready(function () {
 
   //Create Device input
   var form = document.createElement('form');
-  form.onsubmit = function() {
-    CreateDevice(idInput.value);
-  };
   var idLabel = document.createElement('label');
   idLabel.for = 'deviceId';
   idLabel.innerHTML = 'Device ID';
@@ -80,16 +77,16 @@ $(document).ready(function () {
   idInput.type = "text";
   idInput.value = "MyDeviceID";
   form.appendChild(idInput);
-  idSubmit = document.createElement("input");
-  idSubmit.type = 'submit';
-  idSubmit.value = 'Create device';
+  idSubmit = document.createElement("button");
+  
+  idSubmit.onclick = function() {
+    console.log('New Device ID: ' + idInput.value);
+  };
+
+  idSubmit.innerHTML = 'Create Device';
   form.appendChild(idSubmit);
   var body = document.getElementsByTagName('body')[0];
   body.appendChild(form);
-
-  function CreateDevice(deviceId) {
-    console.log('New Device ID: ' + deviceId);
-  }
 
   var ws = new WebSocket('wss://' + location.host);
   ws.onopen = function () {

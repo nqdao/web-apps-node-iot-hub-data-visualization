@@ -83,7 +83,7 @@ $(document).ready(function () {
     console.log('New Device ID: ' + idInput.value);
     var message = {
       type: 'message',
-      text: idInput.value,
+      data: idInput.value,
       date: Date.now()
     };
     console.log('sending message to server');

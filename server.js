@@ -43,9 +43,11 @@ iotHubReader.startReadMessage(function (obj, date) {
 });
 
 //server receives message from client
-wss.onmessage = function(message) {
-  console.log('received message from client: ' + message.data);
-}
+wss.on('connection', function connection(ws) {
+  ws.on('message', function(message) {
+    console.log('received message from client: ' + message.data);
+  });
+});
 
 //Event Hub Reader
 // var eventHubReader = new eventHubClient(process.env['Azure.IoT.EventHub.ConnectionString'], process.env['Azure.IoT.EventHub.ConsumerGroup']);

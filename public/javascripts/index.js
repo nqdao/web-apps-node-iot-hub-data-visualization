@@ -81,6 +81,13 @@ $(document).ready(function () {
 
   idSubmit.onclick = function() {
     console.log('New Device ID: ' + idInput.value);
+    var message = {
+      type: 'message',
+      text: idInput.value,
+      date: Date.now()
+    };
+    console.log('sending message to server');
+    ws.send(JSON.stringify(message));
   };
 
   idSubmit.innerHTML = 'Create Device';
@@ -89,7 +96,7 @@ $(document).ready(function () {
   body.appendChild(idLabel);
   body.appendChild(idInput);
   body.appendChild(idSubmit);
-  
+
 
   var ws = new WebSocket('wss://' + location.host);
   ws.onopen = function () {

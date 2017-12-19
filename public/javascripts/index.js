@@ -81,13 +81,8 @@ $(document).ready(function () {
 
   idSubmit.onclick = function() {
     console.log('New Device ID: ' + idInput.value);
-    var message = {
-      type: 'message',
-      data: idInput.value,
-      date: Date.now()
-    };
     console.log('sending message to server');
-    ws.send(JSON.stringify(message));
+    ws.send(idInput.value);
   };
 
   idSubmit.innerHTML = 'Create Device';

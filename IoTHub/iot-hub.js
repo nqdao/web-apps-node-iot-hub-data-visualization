@@ -62,10 +62,10 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
     message: '',
     deviceInfo: null
   };
-  cb(resp);
-  
+
   this.iotHubRegistry.create(device, function(err, deviceInfo, res) {
     if (err) {
+      console.log('Device: ' device + device.deviceId);
       this.iotHubRegistry.get(device.deviceId, printDeviceInfo);
       resp.type = 'error';
       console.log('Create Device Error: ' + err);

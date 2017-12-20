@@ -31,14 +31,18 @@ wss.broadcast = function broadcast(data) {
 };
 
 var iotHubReader = new iotHubClient(process.env['Azure.IoT.IoTHub.ConnectionString'], process.env['Azure.IoT.IoTHub.ConsumerGroup']);
-iotHubReader.getDevices(function (deviceList) {
-  try {
-    wss.broadcast(JSON.stringify(deviceList));
-  } catch (err) {
-    console.log(deviceList);
-    console.error(err);
-  }
-});
+
+//update device list for all client every minute
+setInterval(function() {
+  iotHubReader.getDevices(function (deviceList) {
+    try {
+      wss.broadcast(JSON.stringify(deviceList));
+    } catch (err) {
+      console.log(deviceList);
+      console.error(err);
+    }
+    });
+}, 1000);
 
 iotHubReader.startReadMessage(function (obj, date) {
   try {

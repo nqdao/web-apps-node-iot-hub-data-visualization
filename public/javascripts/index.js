@@ -89,11 +89,14 @@ $(document).ready(function () {
   //form.appendChild(idSubmit);
   var idResponse = document.createElement('label');
 
+  var deviceList = document.createElement('p');
+
   var body = document.getElementsByTagName('body')[0];
   body.appendChild(idLabel);
   body.appendChild(idInput);
   body.appendChild(idSubmit);
   body.appendChild(idResponse);
+  body.appendChild(deviceList);
 
 
   var ws = new WebSocket('wss://' + location.host);
@@ -106,7 +109,11 @@ $(document).ready(function () {
       var obj = JSON.parse(message.data);
       if(!obj.time || !obj.Temperature) {
         console.log('received non-data message: ' + message.data)
-        idResponse.innerHTML = message.data;
+        if (Array.isArray(message.data)) {
+          deviceList.innerHTML = message.data;
+        } else {
+          idResponse.innerHTML = message.data;
+        }
         return;
       }
       timeData.push(obj.time);

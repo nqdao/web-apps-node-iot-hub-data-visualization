@@ -68,9 +68,16 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
   iotHubRegistry.create(device, function(err, deviceInfo, res) {
     if (err) {
       console.log('Create Error: ' + err);
-      iotHubRegistry.get(device.deviceId, printDeviceInfo);
-      resp.type = 'error';
-      resp.msg = device.deviceId + ' already exists.';
+      iotHubRegistry.get(device.deviceId, function (err, deviceInfo, res) {
+        resp.type = 'error';
+        if (deviceInfo) {
+          resp.msg = device.deviceId + ' already exists.';
+          resp.deviceId = deviceInfo.deviceId;
+          resp.deviceKey = deviceInfo.authentication.symmetricKey.primaryKey;
+        } else {
+          resp.msg = 'unknown';
+        }
+      });
     }
 
     if (deviceInfo) {
@@ -80,17 +87,32 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
       resp.deviceId = deviceInfo.deviceId;
       resp.deviceKey = deviceInfo.authentication.symmetricKey.primaryKey;
     }
-    
+
     cb(resp);
   });
 
+}
+
+IoTHubReaderClient.prototype.getDevices = function(cb) {
+  console.log('Get all devices in IoT Hub');
+  iotHubRegistry.list(function (err, deviceList, res) {
+    if (err) {
+      console.log("Error retrieving device list.");
+    }
+
+    if (deviceList) {
+      deviceList.forEach(function (deviceInfo) {
+        printDeviceInfo(null, deviceInfo, null);
+      });
+      cb(deviceList);
+    }
+  });
 }
 
 function printDeviceInfo(err, deviceInfo, res) {
   if (deviceInfo) {
     console.log('Device ID: ' + deviceInfo.deviceId);
     console.log('Device key: ' + deviceInfo.authentication.symmetricKey.primaryKey);
-    return deviceInfo;
   }
 }
 

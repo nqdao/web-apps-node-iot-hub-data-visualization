@@ -70,21 +70,17 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
       console.log('Create Error: ' + err);
       iotHubRegistry.get(device.deviceId, printDeviceInfo);
       resp.type = 'error';
-      if (deviceInfo) {
-        resp.msg = device.deviceId + ' already exists.';
-        resp.deviceId = deviceInfo.deviceId;
-        resp.deviceKey = deviceInfo.authentication.symmetricKey.primaryKey;
-      }
-    } else {
+      resp.msg = device.deviceId + ' already exists.';
+    }
+
+    if (deviceInfo) {
+      printDeviceInfo(err, deviceInfo, res);
       resp.type = 'success';
       resp.msg = device.deviceId + ' has been registered.';
       resp.deviceId = deviceInfo.deviceId;
       resp.deviceKey = deviceInfo.authentication.symmetricKey.primaryKey;
     }
-
-    if (deviceInfo) {
-      printDeviceInfo(err, deviceInfo, res);
-    }
+    
     cb(resp);
   });
 

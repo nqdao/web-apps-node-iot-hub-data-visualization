@@ -71,12 +71,12 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
       resp.type = 'error';
       resp.msg = device.deviceId + ' already exists.';
       resp.deviceId = deviceInfo.deviceId;
-      resp.deviceKey: deviceInfo.authentication.symmetricKey.primaryKey;
+      resp.deviceKey = deviceInfo.authentication.symmetricKey.primaryKey;
     } else {
       resp.type = 'success';
       resp.msg = device.deviceId + ' has been registered.';
       resp.deviceId = deviceInfo.deviceId;
-      resp.deviceKey: deviceInfo.authentication.symmetricKey.primaryKey;
+      resp.deviceKey = deviceInfo.authentication.symmetricKey.primaryKey;
     }
 
     if (deviceInfo) {

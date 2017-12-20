@@ -5,6 +5,7 @@
 
 var EventHubClient = require('azure-event-hubs').Client;
 var iothub = require('azure-iothub');
+var iotHubRegistry;
 
 // Close connection to IoT Hub.
 IoTHubReaderClient.prototype.stopReadMessage = function() {
@@ -44,7 +45,7 @@ IoTHubReaderClient.prototype.startReadMessage = function(cb) {
 function IoTHubReaderClient(connectionString, consumerGroupName) {
   this.iotHubClient = EventHubClient.fromConnectionString(connectionString);
   this.consumerGroupName = consumerGroupName;
-  this.iotHubRegistry = iothub.Registry.fromConnectionString(connectionString);
+  iotHubRegistry = iothub.Registry.fromConnectionString(connectionString);
 }
 
 IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
@@ -63,23 +64,22 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
     deviceInfo: null
   };
 
-  this.iotHubRegistry.create(device, function(err, deviceInfo, res) {
+  iotHubRegistry.create(device, function(err, deviceInfo, res) {
     if (err) {
-      console.log('Device: ' + device + device.deviceId);
-      this.iotHubRegistry.get(device.deviceId, printDeviceInfo);
+      iotHubRegistry.get(device.deviceId, printDeviceInfo);
       resp.type = 'error';
+      resp.message = err;
       console.log('Create Device Error: ' + err);
     } else {
       resp.type = 'success';
+      resp.message = device.DeviceId + ' has been registered.';
     }
 
     if (deviceInfo) {
       printDeviceInfo(err, deviceInfo, res);
-      if (resp.type == 'error') {
-        resp.message = 'Device already existed';
-      }
       resp.info = deviceInfo;
     }
+
     cb(resp);
   });
 

@@ -53,9 +53,8 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
   };
 
   var device = {
-    deviceId: 'deviceName' 
+    deviceId: deviceId 
   }
-  device.deviceId = deviceId;
   var resp = {
     type: 'error',
     message: '',

@@ -110,7 +110,11 @@ $(document).ready(function () {
       if(!obj.time || !obj.Temperature) {
         console.log('received non-data message: ' + message.data)
         if (Array.isArray(message.data)) {
-          deviceList.innerHTML = message.data;
+          var list = '';
+          message.data.forEach(function (device) {
+            list = list + device.deviceId + '<br>';
+          })
+          deviceList.innerHTML = list;
         } else {
           idResponse.innerHTML = message.data;
         }

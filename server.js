@@ -41,7 +41,7 @@ setInterval(function() {
       console.log(deviceList);
       console.error(err);
     }
-    });
+  });
 }, 1000);
 
 iotHubReader.startReadMessage(function (obj, date) {

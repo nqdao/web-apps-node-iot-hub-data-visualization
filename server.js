@@ -44,7 +44,7 @@ iotHubReader.startReadMessage(function (obj, date) {
 
 //server receives message from client
 wss.on('connection', function connection(ws) {
-  ws.on('message', function(message) {
+  ws.on('message', function (message) {
     console.log('received message from client: ' + message);
     iotHubReader.createDevice(message, function(resp) {
       console.log('Create device response: ' + resp + ' ' + JSON.stringify(resp));

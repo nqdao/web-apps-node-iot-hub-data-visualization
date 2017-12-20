@@ -106,7 +106,7 @@ $(document).ready(function () {
       var obj = JSON.parse(message.data);
       if(!obj.time || !obj.Temperature) {
         console.log('received non-data message: ' + message.data)
-        id.idResponse.innerHTML = message.data;
+        idResponse.innerHTML = message.data;
         return;
       }
       timeData.push(obj.time);

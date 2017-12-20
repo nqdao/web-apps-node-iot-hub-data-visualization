@@ -60,7 +60,7 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
   console.log('Device ID: ' + device.deviceId);
   var resp = {
     type: '',
-    message: '',
+    msg: '',
     deviceInfo: null
   };
 
@@ -68,11 +68,11 @@ IoTHubReaderClient.prototype.createDevice = function(deviceId, cb) {
     if (err) {
       iotHubRegistry.get(device.deviceId, printDeviceInfo);
       resp.type = 'error';
-      resp.message = err;
+      resp.msg = device.deviceId + ' already exists.' ;
       console.log('Create Device Error: ' + err);
     } else {
       resp.type = 'success';
-      resp.message = device.DeviceId + ' has been registered.';
+      resp.msg = device.deviceId + ' has been registered.';
     }
 
     if (deviceInfo) {
